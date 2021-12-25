@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BananaTracks.Providers", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BananaTracks.Domain", "src\BananaTracks.Domain\BananaTracks.Domain.csproj", "{2BC411E3-9E89-44F1-8E3D-0C7C98C7937E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BananaTracks.Functions", "src\BananaTracks.Functions\BananaTracks.Functions.csproj", "{C06CE2AC-974F-4C80-98FE-50411B5472D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{2BC411E3-9E89-44F1-8E3D-0C7C98C7937E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BC411E3-9E89-44F1-8E3D-0C7C98C7937E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BC411E3-9E89-44F1-8E3D-0C7C98C7937E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C06CE2AC-974F-4C80-98FE-50411B5472D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C06CE2AC-974F-4C80-98FE-50411B5472D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C06CE2AC-974F-4C80-98FE-50411B5472D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C06CE2AC-974F-4C80-98FE-50411B5472D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{F80F4030-2E07-42DF-BED0-54BD651F2F17} = {557ECC33-811C-4D7F-AABA-A3BCC4222D9C}
 		{DE39A2FA-8C88-4A34-92DF-0EE78F2E432A} = {557ECC33-811C-4D7F-AABA-A3BCC4222D9C}
 		{2BC411E3-9E89-44F1-8E3D-0C7C98C7937E} = {557ECC33-811C-4D7F-AABA-A3BCC4222D9C}
+		{C06CE2AC-974F-4C80-98FE-50411B5472D1} = {557ECC33-811C-4D7F-AABA-A3BCC4222D9C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7D7EBD1-07F2-4708-A8AA-529DF0CD36F4}
