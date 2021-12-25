@@ -1,0 +1,55 @@
+name: Build and deploy .NET Core Banana Tracks
+on:
+  push:
+    branches:
+    - main
+env:
+  AZURE_WEBAPP_NAME: banana-tracks-app
+  AZURE_WEBAPP_PROJECT_PATH: src\BananaTracks.App.Web
+  AZURE_WEBAPP_PACKAGE_PATH: src\BananaTracks.App.Web/publish
+  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.BANANA_TRACKS_APP_PUBLISH_PROFILE }}
+  AZURE_FUNCTIONS_NAME: banana-tracks-functions
+  AZURE_FUNCTIONS_PROJECT_PATH: src\BananaTracks.Functions
+  AZURE_FUNCTIONS_PACKAGE_PATH: src\BananaTracks.Functions/publish
+  AZURE_FUNCTIONS_PUBLISH_PROFILE: ${{ secrets.BANANA_TRACKS_FUNCTIONS_PUBLISH_PROFILE }}
+  SOLUTION_PATH: BananaTracks.sln
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 6.0.x
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Restore
+      run: dotnet restore "${{ env.SOLUTION_PATH }}"
+    - name: Build
+      run: dotnet build "${{ env.SOLUTION_PATH }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+    - name: Test
+      run: dotnet test "${{ env.SOLUTION_PATH }}" --no-build
+    - name: Publish App
+      run: dotnet publish "${{ env.AZURE_WEBAPP_PROJECT_PATH }}" --configuration "${{ env.CONFIGURATION }}" --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+    - name: Publish Functions
+      run: dotnet publish "${{ env.AZURE_FUNCTIONS_PROJECT_PATH }}" --configuration "${{ env.CONFIGURATION }}" --no-build --output "${{ env.AZURE_FUNCTIONS_PACKAGE_PATH }}"
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        publish-profile: ${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }}
+    - name: Deploy to Azure Function
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_FUNCTIONS_NAME }}
+        package: ${{ env.AZURE_FUNCTIONS_PACKAGE_PATH }}
+        publish-profile: ${{ env.AZURE_FUNCTIONS_PUBLISH_PROFILE }}
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: drop
+        path: |
+          ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          ${{ env.AZURE_FUNCTIONS_PACKAGE_PATH }}

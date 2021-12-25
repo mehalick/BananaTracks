@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BananaTracks.App.Web", "src\BananaTracks.App.Web\BananaTracks.App.Web.csproj", "{E3116CDE-6EA0-4197-A4D1-DACD41AE18B7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BananaTracks.App.Blazor", "src\BananaTracks.App.Blazor\BananaTracks.App.Blazor.csproj", "{070C7DA8-FE93-4404-8F01-95057D9C1DE2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BananaTracks.App.Shared", "src\BananaTracks.App.Shared\BananaTracks.App.Shared.csproj", "{F80F4030-2E07-42DF-BED0-54BD651F2F17}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{557ECC33-811C-4D7F-AABA-A3BCC4222D9C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E29493A8-5D3C-4C21-A2EA-E8C84A454231}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		.github\workflows\banana-tracks.yml = .github\workflows\banana-tracks.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BananaTracks.Providers", "src\BananaTracks.Providers\BananaTracks.Providers.csproj", "{DE39A2FA-8C88-4A34-92DF-0EE78F2E432A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BananaTracks.Domain", "src\BananaTracks.Domain\BananaTracks.Domain.csproj", "{2BC411E3-9E89-44F1-8E3D-0C7C98C7937E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E3116CDE-6EA0-4197-A4D1-DACD41AE18B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3116CDE-6EA0-4197-A4D1-DACD41AE18B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3116CDE-6EA0-4197-A4D1-DACD41AE18B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3116CDE-6EA0-4197-A4D1-DACD41AE18B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{070C7DA8-FE93-4404-8F01-95057D9C1DE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{070C7DA8-FE93-4404-8F01-95057D9C1DE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{070C7DA8-FE93-4404-8F01-95057D9C1DE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{070C7DA8-FE93-4404-8F01-95057D9C1DE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F80F4030-2E07-42DF-BED0-54BD651F2F17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F80F4030-2E07-42DF-BED0-54BD651F2F17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F80F4030-2E07-42DF-BED0-54BD651F2F17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F80F4030-2E07-42DF-BED0-54BD651F2F17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE39A2FA-8C88-4A34-92DF-0EE78F2E432A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE39A2FA-8C88-4A34-92DF-0EE78F2E432A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE39A2FA-8C88-4A34-92DF-0EE78F2E432A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE39A2FA-8C88-4A34-92DF-0EE78F2E432A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BC411E3-9E89-44F1-8E3D-0C7C98C7937E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BC411E3-9E89-44F1-8E3D-0C7C98C7937E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BC411E3-9E89-44F1-8E3D-0C7C98C7937E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BC411E3-9E89-44F1-8E3D-0C7C98C7937E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E3116CDE-6EA0-4197-A4D1-DACD41AE18B7} = {557ECC33-811C-4D7F-AABA-A3BCC4222D9C}
+		{070C7DA8-FE93-4404-8F01-95057D9C1DE2} = {557ECC33-811C-4D7F-AABA-A3BCC4222D9C}
+		{F80F4030-2E07-42DF-BED0-54BD651F2F17} = {557ECC33-811C-4D7F-AABA-A3BCC4222D9C}
+		{DE39A2FA-8C88-4A34-92DF-0EE78F2E432A} = {557ECC33-811C-4D7F-AABA-A3BCC4222D9C}
+		{2BC411E3-9E89-44F1-8E3D-0C7C98C7937E} = {557ECC33-811C-4D7F-AABA-A3BCC4222D9C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E7D7EBD1-07F2-4708-A8AA-529DF0CD36F4}
+	EndGlobalSection
+EndGlobal
