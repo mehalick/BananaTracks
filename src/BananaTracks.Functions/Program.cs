@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
@@ -11,6 +12,8 @@ public class Program
 			.ConfigureFunctionsWorkerDefaults()
 			.ConfigureAppConfiguration(config =>
 			{
+				config.AddUserSecrets(Assembly.GetExecutingAssembly(), true);
+
 				var settings = config.Build();
 				var connection = settings["BananaTracks:Connections:AppConfig"];
 
