@@ -1,0 +1,1 @@
+[![Build and deploy .NET Core Banana Tracks](https://github.com/mehalick/BananaTracks/actions/workflows/banana-tracks.yml/badge.svg)](https://github.com/mehalick/BananaTracks/actions/workflows/banana-tracks.yml)

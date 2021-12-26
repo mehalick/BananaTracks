@@ -1,4 +1,4 @@
-namespace BananaTracks.App.Web.Pages;
+namespace BananaTracks.App.Pages;
 
 public class HostModel : PageModel
 {

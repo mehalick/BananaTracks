@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "BananaTracks.App.Web": {
+    "BananaTracks.App": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

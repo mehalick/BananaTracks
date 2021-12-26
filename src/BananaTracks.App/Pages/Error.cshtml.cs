@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace BananaTracks.App.Web.Pages;
+namespace BananaTracks.App.Pages;
 
 [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 [IgnoreAntiforgeryToken]

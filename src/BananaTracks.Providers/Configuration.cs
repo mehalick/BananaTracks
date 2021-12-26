@@ -1,4 +1,6 @@
-using BananaTracks.Domain.Abstractions;
+using Azure.Messaging.ServiceBus;
+using BananaTracks.Domain.ServiceBus;
+using BananaTracks.Providers.ServiceBus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +12,11 @@ public static class Configuration
 	public static void AddDependencies(this IServiceCollection services, IConfiguration configuration)
 	{
 		services.AddDbContext<ICosmosContext, CosmosContext>(options => options.UseCosmos(configuration["BananaTracks:Connections:CosmosDb"], "banana-tracks"));
+
+		services.AddSingleton(_ => new ServiceBusClient(configuration["BananaTracks:Connections:ServiceBus"]));
+
+		services.AddSingleton<IServiceBusProvider, ServiceBusProvider>();
+
 		services.AddScoped<ITenantService, TenantService>();
 	}
 }

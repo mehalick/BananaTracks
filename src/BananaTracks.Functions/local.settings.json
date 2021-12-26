@@ -1,7 +1,8 @@
 {
-    "IsEncrypted": false,
-    "Values": {
-        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-        "FUNCTIONS_WORKER_RUNTIME": "dotnet"
-    }
+	"IsEncrypted": false,
+	"Values": {
+		"AzureWebJobsStorage": "UseDevelopmentStorage=true",
+		"BananaTracks:Connections:AppConfig": "Endpoint=https://ojp-config.azconfig.io;Id=oZdc-l0-s0:S6JNU4PhRKhMLLtpu8Lx;Secret=h3erKsaWCMA9qul1IvJv3Dm30hrKxcAv06xescMxul4=",
+		"FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated"
+	}
 }

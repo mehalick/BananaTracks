@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BananaTracks.Functions": {
+      "commandName": "Project",
+      "commandLineArgs": "--csharp"
+    }
+  }
+}
