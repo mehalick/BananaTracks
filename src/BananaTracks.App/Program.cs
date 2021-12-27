@@ -1,7 +1,9 @@
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
+using Serilog;
 
 namespace BananaTracks.App;
 
@@ -11,8 +13,17 @@ internal class Program
 	{
 		var builder = WebApplication.CreateBuilder(args);
 
-		builder.Host.ConfigureAppConfiguration(config =>
+		builder.Host.UseSerilog((_, config) => config
+			.WriteTo.Console()
+			.WriteTo.ApplicationInsights(TelemetryConfiguration.CreateDefault(), TelemetryConverter.Traces));
+
+		builder.Host.ConfigureAppConfiguration((context, config) =>
 		{
+			if (context.HostingEnvironment.IsDevelopment())
+			{
+				return;
+			}
+
 			var settings = config.Build();
 			var connection = settings["BananaTracks:Connections:AppConfig"];
 
@@ -84,13 +95,13 @@ internal class Program
 		}
 		else
 		{
+			app.UseAzureAppConfiguration();
 			app.UseExceptionHandler("/Error");
 			app.UseHsts();
+			app.UseHttpsRedirection();
 		}
 
-		app.UseHttpsRedirection();
-
-		app.UseAzureAppConfiguration();
+		app.UseSerilogRequestLogging();
 
 		app.UseBlazorFrameworkFiles();
 		app.UseStaticFiles();

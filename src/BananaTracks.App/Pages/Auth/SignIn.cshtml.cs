@@ -14,11 +14,13 @@ public class SignInModel : PageModel
 
 	private readonly ITenantService _tenantService;
 	private readonly IServiceBusProvider _serviceBusProvider;
+	private readonly ILogger<SignInModel> _logger;
 
-	public SignInModel(ITenantService tenantService, IServiceBusProvider serviceBusProvider)
+	public SignInModel(ITenantService tenantService, IServiceBusProvider serviceBusProvider, ILogger<SignInModel> logger)
 	{
 		_tenantService = tenantService;
 		_serviceBusProvider = serviceBusProvider;
+		_logger = logger;
 	}
 
 	public async Task<IActionResult> OnGet(string? id)
@@ -55,16 +57,18 @@ public class SignInModel : PageModel
 
 	public async Task<IActionResult> OnPost(CancellationToken cancellationToken)
 	{
-		if (!ModelState.IsValid)
-		{
-			return Page();
-		}
+		//if (!ModelState.IsValid)
+		//{
+		//	return Page();
+		//}
 
 		await _serviceBusProvider.Send(new SignInRequestedMessage
 		{
 			TenantId = _tenantService.Tenant.Id,
 			Email = Email
 		}, cancellationToken);
+
+		_logger.LogInformation("Great success!");
 
 		return Page();
 	}
