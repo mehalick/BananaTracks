@@ -4,6 +4,8 @@
 		"AzureWebJobsStorage": "UseDevelopmentStorage=true",
 		"BananaTracks:Connections:AppConfig": "",
 		"BananaTracks:Connections:ServiceBus": "",
+		"BananaTracks:SendGrid:ApiKey": "",
+		"BananaTracks:SendGrid:Sender": "noreply@bananatracks.com",
 		"FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated"
 	}
 }

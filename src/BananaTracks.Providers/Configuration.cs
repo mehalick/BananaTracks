@@ -1,5 +1,7 @@
 using Azure.Messaging.ServiceBus;
+using BananaTracks.Domain.Messaging;
 using BananaTracks.Domain.ServiceBus;
+using BananaTracks.Providers.Messaging;
 using BananaTracks.Providers.ServiceBus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +17,7 @@ public static class Configuration
 
 		services.AddSingleton(_ => new ServiceBusClient(configuration["BananaTracks:Connections:ServiceBus"]));
 
+		services.AddSingleton<IEmailProvider, SendGridProvider>();
 		services.AddSingleton<IServiceBusProvider, ServiceBusProvider>();
 
 		services.AddScoped<ITenantService, TenantService>();

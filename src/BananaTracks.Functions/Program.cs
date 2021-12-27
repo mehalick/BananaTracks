@@ -1,5 +1,8 @@
 using System.Reflection;
+using BananaTracks.Domain.Configuration;
+using BananaTracks.Providers;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace BananaTracks.Functions;
@@ -25,9 +28,18 @@ public class Program
 						.ConfigureRefresh(refresh => refresh.Register("BananaTracks:_version", true));
 				});
 			})
-			.ConfigureServices(services =>
+			.ConfigureServices((context, services) =>
 			{
-				services.AddAzureAppConfiguration();
+				//services.AddAzureAppConfiguration();
+
+				services.AddOptions();
+				services.Configure<AppSettings>(context.Configuration.GetSection("BananaTracks"));
+
+				var serviceProvider = services.BuildServiceProvider();
+				var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+
+				//services.AddAzureAppConfiguration();
+				services.AddDependencies(configuration);
 			})
 			.Build();
 

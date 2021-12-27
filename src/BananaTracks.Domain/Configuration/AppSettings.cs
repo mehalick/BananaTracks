@@ -2,7 +2,8 @@ namespace BananaTracks.Domain.Configuration;
 
 public class AppSettings
 {
-	public Dictionary<string, Tenant> HostTenants { get; set; } = new Dictionary<string, Tenant>();
+	public Dictionary<Guid, Tenant> TenantsById { get; set; } = new Dictionary<Guid, Tenant>();
+	public Dictionary<string, Tenant> TenantsByHost { get; set; } = new Dictionary<string, Tenant>();
 
 	private Tenant[] _tenants = null!;
 
@@ -15,7 +16,8 @@ public class AppSettings
 
 			foreach (var tenant in _tenants)
 			{
-				HostTenants.Add(tenant.Host, tenant);
+				TenantsById.Add(tenant.Id, tenant);
+				TenantsByHost.Add(tenant.Host, tenant);
 			}
 		}
 	}

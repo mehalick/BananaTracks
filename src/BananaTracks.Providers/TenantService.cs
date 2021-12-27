@@ -27,7 +27,7 @@ public class TenantService : ITenantService
 
 			var host = _httpContextAccessor.HttpContext.Request.Host.ToString();
 
-			return _tenant = _appSettings.Value.HostTenants[host];
+			return _tenant = _appSettings.Value.TenantsByHost[host];
 		}
 	}
 }
