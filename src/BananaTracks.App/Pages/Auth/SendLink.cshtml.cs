@@ -19,9 +19,9 @@ public class SendLinkModel : PageModel
 
 	public SendLinkModel(ITenantService tenantService, IServiceBusProvider serviceBusProvider, ILogger<SendLinkModel> logger, IWebHostEnvironment environment, UrlSecurity urlSecurity)
 	{
+		_tenant = tenantService.Tenant;
 		_serviceBusProvider = serviceBusProvider;
 		_logger = logger;
-		_tenant = tenantService.Tenant;
 
 		if (environment.IsDevelopment() && !string.IsNullOrWhiteSpace(Email))
 		{
