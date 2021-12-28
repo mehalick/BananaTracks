@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Serilog;
+using Serilog.Events;
 
 namespace BananaTracks.App;
 
@@ -14,6 +15,10 @@ internal class Program
 		var builder = WebApplication.CreateBuilder(args);
 
 		builder.Host.UseSerilog((_, config) => config
+			.MinimumLevel.Debug()
+			.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+			.MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+			.Enrich.FromLogContext()
 			.WriteTo.Console()
 			.WriteTo.ApplicationInsights(TelemetryConfiguration.CreateDefault(), TelemetryConverter.Traces));
 
@@ -100,6 +105,11 @@ internal class Program
 			app.UseHsts();
 			app.UseHttpsRedirection();
 		}
+
+		app.UseCookiePolicy(new CookiePolicyOptions
+		{
+			MinimumSameSitePolicy = SameSiteMode.Strict,
+		});
 
 		app.UseSerilogRequestLogging();
 

@@ -23,44 +23,42 @@ public class SignInModel : PageModel
 		_logger = logger;
 	}
 
-	public async Task<IActionResult> OnGet(string? id)
+	public async Task<IActionResult> OnGet(string? email)
 	{
-		//var autoGenerateSignInId = _environment.IsDevelopment() && id == null && !string.IsNullOrWhiteSpace(Email);
-
-		//if (autoGenerateSignInId )
-		//{
-		//	using var sha256 = SHA256.Create();
-		//	var hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(Email));
-		//	id = Convert.ToBase64String(hash);
-		//}
-
-		if (!string.IsNullOrWhiteSpace(id))
+		if (string.IsNullOrWhiteSpace(email))
 		{
-			var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-			identity.AddClaim(new Claim(ClaimTypes.Name, id));
-			identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, id));
-
-			await HttpContext.SignInAsync(
-				CookieAuthenticationDefaults.AuthenticationScheme,
-				new ClaimsPrincipal(identity),
-				new AuthenticationProperties
-				{
-					ExpiresUtc = DateTimeOffset.UtcNow.AddYears(1),
-					IsPersistent = true
-				});
-
-			return Redirect("/");
+			return Page();
 		}
 
-		return Page();
+		await SignIn(email);
+
+		return Redirect("/");
+	}
+
+	private async Task SignIn(string email)
+	{
+		var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+		identity.AddClaim(new Claim(ClaimTypes.Name, email));
+		identity.AddClaim(new Claim("tenant_id", _tenantService.Tenant.Id.ToString()));
+
+		await HttpContext.SignInAsync(
+			identity.AuthenticationType,
+			new ClaimsPrincipal(identity),
+			new AuthenticationProperties
+			{
+				ExpiresUtc = DateTimeOffset.UtcNow.AddYears(1),
+				IsPersistent = true
+			});
+
+		_logger.LogInformation("Sign-in successful for {Email}", email);
 	}
 
 	public async Task<IActionResult> OnPost(CancellationToken cancellationToken)
 	{
-		//if (!ModelState.IsValid)
-		//{
-		//	return Page();
-		//}
+		if (!ModelState.IsValid)
+		{
+			return Page();
+		}
 
 		await _serviceBusProvider.Send(new SignInRequestedMessage
 		{
@@ -68,7 +66,7 @@ public class SignInModel : PageModel
 			Email = Email
 		}, cancellationToken);
 
-		_logger.LogInformation("Great success!");
+		_logger.LogInformation("Sign-in request sent to service bus for {Email}", Email);
 
 		return Page();
 	}
