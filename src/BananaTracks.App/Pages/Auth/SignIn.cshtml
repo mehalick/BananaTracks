@@ -1,11 +1,6 @@
-@page
+@page "/auth/sign-in"
 @model BananaTracks.App.Pages.Auth.SignInModel
 
 <form method="post">
-	<div class="input-group">
-		<input asp-for="Email" class="form-control" placeholder="Email" aria-label="Email" />
-		<button type="submit" class="btn btn-primary">Send Link</button>
-	</div>
-	<span asp-validation-for="Email" class="text-danger">Please enter your email address.</span>
+	<button type="submit" class="btn btn-primary">Sign In</button>
 </form>
-

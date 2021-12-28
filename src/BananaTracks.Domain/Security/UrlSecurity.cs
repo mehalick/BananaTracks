@@ -1,7 +1,6 @@
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using BananaTracks.Domain.Exceptions;
 using BananaTracks.Domain.Providers;
 using Microsoft.Extensions.Configuration;
 
@@ -9,10 +8,18 @@ namespace BananaTracks.Domain.Security;
 
 public class UrlSecurity
 {
+	public enum ValidationStatus
+	{
+		MissingParameters,
+		ExpiredTimestamp,
+		InvalidToken,
+		Success
+	}
+
 	/// <summary>
 	/// The default amount of time in milliseconds that URLs are valid for.
 	/// </summary>
-	public const int DefaultUrlExpiration = 172800000; // 48 hours
+	public const int DefaultUrlExpirationInMilliseconds = 1 * 60 * 60 * 1000; // 1 hour
 
 	private const string TimestampParam = "timestamp";
 	private const string HashParam = "hash";
@@ -24,7 +31,7 @@ public class UrlSecurity
 	public UrlSecurity(IConfiguration configuration, ITimeProvider? timeProvider = null, int? urlExpiration = null)
 	{
 		_timeProvider = timeProvider ?? new UtcTimeProvider();
-		_urlExpiration = urlExpiration ?? DefaultUrlExpiration;
+		_urlExpiration = urlExpiration ?? DefaultUrlExpirationInMilliseconds;
 		_salt = configuration["BananaTracks:HashSalt"];
 	}
 
@@ -40,7 +47,7 @@ public class UrlSecurity
 			throw new ArgumentException("URL cannot be null or whitespace.", nameof(baseUrl));
 		}
 
-		parameters ??= new();
+		parameters ??= new Dictionary<string, object>();
 		var timestamp = _timeProvider.Now().Ticks;
 
 		var input = GetDelimitedParameters(parameters, timestamp);
@@ -81,12 +88,12 @@ public class UrlSecurity
 	/// <summary>
 	/// Returns whether or not a secure URL is valid.
 	/// </summary>
-	public bool ValidateSecureUrl(UrlToken urlToken, params object[] parameters)
+	public ValidationStatus ValidateSecureUrl(UrlToken urlToken, params object[] parameters)
 	{
 		var dictionary = new Dictionary<string, object>();
 		for (var i = 0; i < parameters.Length; i++)
 		{
-			dictionary.Add(i.ToString(), parameters[i]);
+			dictionary.Add(FormattableString.Invariant($"{i}"), parameters[i]);
 		}
 
 		return ValidateSecureUrl(urlToken, dictionary);
@@ -95,24 +102,24 @@ public class UrlSecurity
 	/// <summary>
 	/// Returns whether or not a secure URL is valid.
 	/// </summary>
-	public bool ValidateSecureUrl(UrlToken urlToken, Dictionary<string, object> parameters)
+	public ValidationStatus ValidateSecureUrl(UrlToken urlToken, Dictionary<string, object> parameters)
 	{
 		if (!ValidateParameters(urlToken))
 		{
-			throw new MissingParametersException();
+			return ValidationStatus.MissingParameters;
 		}
 
 		if (!ValidateTimestamp(urlToken.Timestamp))
 		{
-			throw new ExpiredTimestampException();
+			return ValidationStatus.ExpiredTimestamp;
 		}
 
 		if (!ValidateToken(urlToken, parameters))
 		{
-			throw new InvalidTokenException();
+			return ValidationStatus.InvalidToken;
 		}
 
-		return true;
+		return ValidationStatus.Success;
 	}
 
 	private static bool ValidateParameters(UrlToken urlToken)

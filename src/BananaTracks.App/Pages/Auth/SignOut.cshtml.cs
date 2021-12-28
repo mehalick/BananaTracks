@@ -8,6 +8,6 @@ public class SignOutModel : PageModel
 	{
 		await HttpContext.SignOutAsync();
 
-		return RedirectToPage(nameof(SignIn));
+		return RedirectToPage("SendLink");
 	}
 }

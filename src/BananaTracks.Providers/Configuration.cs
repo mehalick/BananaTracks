@@ -1,5 +1,6 @@
 using Azure.Messaging.ServiceBus;
 using BananaTracks.Domain.Messaging;
+using BananaTracks.Domain.Security;
 using BananaTracks.Domain.ServiceBus;
 using BananaTracks.Providers.Messaging;
 using BananaTracks.Providers.ServiceBus;
@@ -19,6 +20,7 @@ public static class Configuration
 
 		services.AddSingleton<IEmailProvider, SendGridProvider>();
 		services.AddSingleton<IServiceBusProvider, ServiceBusProvider>();
+		services.AddSingleton<UrlSecurity>();
 
 		services.AddScoped<ITenantService, TenantService>();
 	}

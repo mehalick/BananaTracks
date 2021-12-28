@@ -24,9 +24,9 @@ public class SignInRequested
 	[Function(nameof(SignInRequested))]
 	public async Task Run([ServiceBusTrigger("signin-requested", Connection = "BananaTracks:Connections:ServiceBus")] SignInRequestedMessage message)
 	{
-		var tenant = _appSettings.TenantsById[message.TenantId];
+		var tenant = _appSettings.TenantsById[message.TenantIdId];
 
-		var signInUrl = _urlSecurity.GenerateSecureUrl($"https://{tenant.Host}/auth/signin", new Dictionary<string, object>
+		var signInUrl = _urlSecurity.GenerateSecureUrl($"https://{tenant.Host}/auth/sign-in", new Dictionary<string, object>
 		{
 			["email"] = message.Email
 		});

@@ -56,8 +56,8 @@ internal class Program
 		builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 			.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
 			{
-				options.LoginPath = "/auth/signin";
-				options.LogoutPath = "/auth/signout";
+				options.LoginPath = "/auth/send-link";
+				options.LogoutPath = "/auth/sign-out";
 				options.Events = new CookieAuthenticationEvents
 				{
 					OnRedirectToLogin = redirectContext =>
