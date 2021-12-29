@@ -1,20 +1,22 @@
-using System.Security.Claims;
+using BananaTracks.App.Extensions;
 using BananaTracks.Domain;
 using BananaTracks.Domain.Security;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 
 namespace BananaTracks.App.Pages.Auth;
 
 public class SignInModel : PageModel
 {
 	private readonly Tenant _tenant;
+	private readonly ICosmosContext _cosmosContext;
 	private readonly UrlSecurity _urlSecurity;
 	private readonly ILogger<SignInModel> _logger;
 
-	public SignInModel(ITenantService tenantService, UrlSecurity urlSecurity, ILogger<SignInModel> logger)
+	public SignInModel(ITenantService tenantService, ICosmosContext cosmosContext, UrlSecurity urlSecurity, ILogger<SignInModel> logger)
 	{
 		_tenant = tenantService.Tenant;
+		_cosmosContext = cosmosContext;
 		_urlSecurity = urlSecurity;
 		_logger = logger;
 	}
@@ -26,13 +28,13 @@ public class SignInModel : PageModel
 		return Page();
 	}
 
-	public async Task<IActionResult> OnPost(string email, UrlToken urlToken)
+	public async Task<IActionResult> OnPost(string email, UrlToken urlToken, CancellationToken cancellationToken)
 	{
 		ValidateUrl(email, urlToken);
 
 		// TODO: get use from Cosmos
 
-		await SignIn(email);
+		await SignIn(email, cancellationToken);
 
 		return Redirect("/");
 	}
@@ -47,20 +49,20 @@ public class SignInModel : PageModel
 		}
 	}
 
-	private async Task SignIn(string email)
+	private async Task SignIn(string email, CancellationToken cancellationToken)
 	{
-		var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-		identity.AddClaim(new Claim(ClaimTypes.Name, email));
-		identity.AddClaim(new Claim("tenant_id", _tenant.Id.ToString()));
+		var user = await _cosmosContext.Users
+			.AsNoTracking()
+			.WithPartitionKey(_tenant.Id.ToString())
+			.Where(i => i.Email == email)
+			.SingleOrDefaultAsync(cancellationToken);
 
-		await HttpContext.SignInAsync(
-			identity.AuthenticationType,
-			new ClaimsPrincipal(identity),
-			new AuthenticationProperties
-			{
-				ExpiresUtc = DateTimeOffset.UtcNow.AddYears(1),
-				IsPersistent = true
-			});
+		if (user is null)
+		{
+			throw new Exception($"No user '{email}' found in current tenant.");
+		}
+
+		await HttpContext.SignInAsync(_tenant.Id, user);
 
 		_logger.LogInformation("Sign-in successful for {Email}", email);
 	}

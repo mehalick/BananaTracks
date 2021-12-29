@@ -1,4 +1,3 @@
-using BananaTracks.Domain;
 using BananaTracks.Domain.Abstractions;
 using BananaTracks.Domain.Configuration;
 using BananaTracks.Domain.Messaging;
@@ -32,23 +31,29 @@ public class SignInRequested
 	{
 		var tenant = _appSettings.TenantsById[message.TenantIdId];
 
-		var usersExist = await _cosmosContext.Users.AnyAsync(x => x.TenantId == tenant.Id);
+		var userId = await _cosmosContext.Users
+			.AsNoTracking()
+			.WithPartitionKey(tenant.Id.ToString())
+			.Where(i => i.Email == message.Email)
+			.Select(i => i.Id)
+			.SingleOrDefaultAsync();
 
-		if (!usersExist)
+		string text, html;
+
+		if (userId == Guid.Empty)
 		{
-			var user = new User(tenant.Id, message.Email, "", Claims.Administrator);
-
-			await _cosmosContext.Users.AddAsync(user);
-			await _cosmosContext.SaveChangesAsync();
+			text = html = "We're sorry but an account was not found for this email address.";
 		}
-
-		var signInUrl = _urlSecurity.GenerateSecureUrl($"https://{tenant.Host}/auth/sign-in", new Dictionary<string, object>
+		else
 		{
-			["email"] = message.Email
-		});
+			var signInUrl = _urlSecurity.GenerateSecureUrl($"https://{tenant.Host}/auth/sign-in", new Dictionary<string, object>
+			{
+				["email"] = message.Email
+			});
 
-		var text = $"Here's your sign-in link: {signInUrl}.";
-		var html = $"Here's your sign-in link: <a href=\"{signInUrl}\" clicktracking=\"off\">Sign In</a>.";
+			text = $"Here's your sign-in link: {signInUrl}.";
+			html = $"Here's your sign-in link: <a href=\"{signInUrl}\" clicktracking=\"off\">Sign In</a>.";
+		}
 
 		await _emailProvider.Send(message.Email, "Sign In Link", text, html);
 	}

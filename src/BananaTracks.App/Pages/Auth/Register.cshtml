@@ -1,0 +1,21 @@
+@page "/auth/register"
+@model BananaTracks.App.Pages.Auth.RegisterModel
+
+<form method="post">
+	<div class="mb-3">
+		<label asp-for="Email" class="form-label">Email</label>
+		<input asp-for="Email" class="form-control"/>
+		<span asp-validation-for="Email" class="text-danger">Please enter your email address.</span>
+	</div>
+	<div class="mb-3">
+		<label asp-for="Name" class="form-label">Name</label>
+		<input asp-for="Name" class="form-control"/>
+		<span asp-validation-for="Name" class="text-danger">Please enter your name.</span>
+	</div>
+	<div class="mb-3">
+		<label asp-for="Team" class="form-label">Team Name</label>
+		<input asp-for="Team" class="form-control"/>
+		<span asp-validation-for="Team" class="text-danger">Please enter your team name.</span>
+	</div>
+    <button type="submit" class="btn btn-primary">Create Account</button>
+</form>

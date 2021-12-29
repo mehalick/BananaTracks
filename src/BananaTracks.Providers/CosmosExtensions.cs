@@ -21,6 +21,8 @@ internal static class CosmosExtensions
 
 		builder.Property(i => i.Id).ToJsonProperty("id");
 
+		builder.UseETagConcurrency();
+
 		return builder;
 	}
 }

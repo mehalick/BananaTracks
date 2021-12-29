@@ -4,6 +4,7 @@ namespace BananaTracks.Providers;
 
 internal class CosmosContext : DbContext, ICosmosContext
 {
+	public DbSet<Team> Teams { get; set; } = null!;
 	public DbSet<User> Users { get; set; } = null!;
 
 	public CosmosContext(DbContextOptions options) : base(options)
@@ -28,6 +29,7 @@ internal class CosmosContext : DbContext, ICosmosContext
 	{
 		//builder.ApplyConfigurationsFromAssembly(typeof(CosmosContext).Assembly);
 
+		builder.Entity<Team>().SetDefaults();
 		builder.Entity<User>().SetDefaults();
 
 		base.OnModelCreating(builder);
