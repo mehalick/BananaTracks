@@ -1,0 +1,16 @@
+@if (IsLoading)
+{
+	<div class="loading">
+		<i class="fad fa-circle-notch fa-spin fa-2x"></i>
+	</div>
+}
+else if (Style == LoadingStyle.Panel)
+{
+	<div class="panel">
+		@ChildContent
+	</div>
+}
+else
+{
+	@ChildContent
+}

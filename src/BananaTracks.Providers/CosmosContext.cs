@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BananaTracks.Providers;
 
@@ -32,21 +33,13 @@ internal class CosmosContext : DbContext, ICosmosContext
 		builder.Entity<Team>().SetDefaults();
 		builder.Entity<User>().SetDefaults();
 
+		var converter = new ValueConverter<DateOnly, string>(
+			i => $"{i:yyyy-MM-dd}",
+			i => DateOnly.ParseExact(i, "yyyy-MM-dd"));
+
+		builder.Entity<User>().Property(i => i.StartDate).HasConversion(converter);
+		builder.Entity<User>().Property(i => i.ResetDate).HasConversion(converter);
+
 		base.OnModelCreating(builder);
-	}
-
-	public async Task Initialize()
-	{
-		await Database.EnsureCreatedAsync();
-
-		//var t = await Users.CountAsync();
-
-		//if (t > 0)
-		//{
-		//	return;
-		//}
-
-		//await AddAsync(new User("Local"));
-		//await SaveChangesAsync();
 	}
 }

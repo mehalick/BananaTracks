@@ -45,6 +45,8 @@ internal class Program
 		builder.Services.AddOptions();
 		builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("BananaTracks"));
 
+		builder.Services.AddGrpc();
+
 		builder.Services.AddRazorPages(options =>
 		{
 			options.Conventions.AllowAnonymousToFolder("/auth");
@@ -77,23 +79,6 @@ internal class Program
 
 		var app = builder.Build();
 
-		//using (var scope = app.Services.CreateScope())
-		//{
-		//	var services = scope.ServiceProvider;
-
-		//	try
-		//	{
-		//		var context = services.GetRequiredService<ICosmosContext>();
-
-		//		await context.Initialize();
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		var logger = services.GetRequiredService<ILogger<Program>>();
-		//		logger.LogError(ex, "An error occurred while seeding the database.");
-		//	}
-		//}
-
 		if (app.Environment.IsDevelopment())
 		{
 			app.UseWebAssemblyDebugging();
@@ -121,7 +106,10 @@ internal class Program
 		app.UseAuthentication();
 		app.UseAuthorization();
 
+		app.UseGrpcWeb();
+
 		app.MapRazorPages();
+		app.MapGrpcService<Services.UserService>().EnableGrpcWeb();
 		app.MapFallbackToFile("/_Host");
 
 		await app.RunAsync();

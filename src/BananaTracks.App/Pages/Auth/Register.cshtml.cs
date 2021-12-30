@@ -30,15 +30,12 @@ public class RegisterModel : PageModel
 
 	public async Task<IActionResult> OnGet(CancellationToken cancellationToken)
 	{
-		var x = await _cosmosContext.Users.Where(x => x.TenantId == _tenantId).FirstOrDefaultAsync(cancellationToken);
+		var userCount = await _cosmosContext.Users.WithPartitionKey(_tenantId.ToString()).CountAsync(cancellationToken);
 
-		var y = await _cosmosContext.Users
-			.AsNoTracking()
-			.WithPartitionKey(_tenantId.ToString())
-			.Select(i => i.Id)
-			.FirstOrDefaultAsync(cancellationToken);
-
-		var z = await _cosmosContext.Users.WithPartitionKey(_tenantId.ToString()).CountAsync(cancellationToken);
+		if (userCount > 0)
+		{
+			return Content("Cannot register, team and admin already set for current tenant.");
+		}
 
 		return Page();
 	}
@@ -50,16 +47,19 @@ public class RegisterModel : PageModel
 			return Page();
 		}
 
-		var user = new User(_tenantId, Email, Name, Claims.Administrator);
-		var team = new Team(_tenantId, Team)
+		var team = new Team(_tenantId, Team);
+
+		var user = new User(_tenantId, Email, Name)
 		{
-			ManagerId = user.Id
+			Claims = Claims.Administrator,
+			TeamId = team.Id,
+			TeamName = team.Name
 		};
 
-		user.TeamId = team.Id;
+		team.ManagerId = user.Id;
 
-		await _cosmosContext.Users.AddAsync(user, cancellationToken);
 		await _cosmosContext.Teams.AddAsync(team, cancellationToken);
+		await _cosmosContext.Users.AddAsync(user, cancellationToken);
 		await _cosmosContext.SaveChangesAsync(cancellationToken);
 
 		await HttpContext.SignInAsync(_tenantId, user);

@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using BananaTracks.Domain;
+using Grpc.Core;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -29,5 +30,13 @@ public static class HttpContextExtensions
 				ExpiresUtc = DateTimeOffset.UtcNow.AddYears(1),
 				IsPersistent = true
 			});
+	}
+
+	public static Guid GetUserId(this ServerCallContext context)
+	{
+		var httpContext = context.GetHttpContext();
+		var user = httpContext.User;
+
+		return Guid.Parse(user.Identity!.Name!);
 	}
 }

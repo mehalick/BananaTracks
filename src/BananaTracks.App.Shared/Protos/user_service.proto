@@ -1,0 +1,18 @@
+syntax = "proto3";
+option csharp_namespace = "BananaTracks.App.Shared.Protos";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+service UserService {
+	rpc GetUser (google.protobuf.Empty) returns (.GetUserReply);
+}
+
+message GetUserReply {
+	string id = 1;
+	string email = 2;
+	string name = 3;
+	string teamId = 4;
+	string teamName = 5;
+	google.protobuf.Timestamp startDate = 6;
+	google.protobuf.Timestamp resetDate = 7;
+}
