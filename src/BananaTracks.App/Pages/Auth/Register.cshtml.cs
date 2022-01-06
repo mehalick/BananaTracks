@@ -1,7 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using BananaTracks.App.Extensions;
-using BananaTracks.Domain;
-using Microsoft.EntityFrameworkCore;
+using BananaTracks.Domain.Entities;
 
 namespace BananaTracks.App.Pages.Auth;
 

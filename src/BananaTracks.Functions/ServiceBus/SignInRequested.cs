@@ -1,9 +1,6 @@
-using BananaTracks.Domain.Abstractions;
 using BananaTracks.Domain.Configuration;
 using BananaTracks.Domain.Messaging;
 using BananaTracks.Domain.Security;
-using BananaTracks.Domain.ServiceBus;
-using Microsoft.Azure.Functions.Worker;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -29,7 +26,7 @@ public class SignInRequested
 	[Function(nameof(SignInRequested))]
 	public async Task Run([ServiceBusTrigger("signin-requested", Connection = "BananaTracks:Connections:ServiceBus")] SignInRequestedMessage message)
 	{
-		var tenant = _appSettings.TenantsById[message.TenantIdId];
+		var tenant = _appSettings.TenantsById[message.TenantId];
 
 		var userId = await _cosmosContext.Users
 			.AsNoTracking()

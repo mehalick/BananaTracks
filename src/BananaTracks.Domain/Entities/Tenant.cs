@@ -1,4 +1,4 @@
-namespace BananaTracks.Domain;
+namespace BananaTracks.Domain.Entities;
 
 public class Tenant
 {

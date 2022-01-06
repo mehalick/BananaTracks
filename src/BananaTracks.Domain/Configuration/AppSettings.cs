@@ -1,3 +1,5 @@
+using BananaTracks.Domain.Entities;
+
 namespace BananaTracks.Domain.Configuration;
 
 public class AppSettings

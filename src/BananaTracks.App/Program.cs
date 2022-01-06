@@ -109,6 +109,7 @@ internal class Program
 		app.UseGrpcWeb();
 
 		app.MapRazorPages();
+		app.MapGrpcService<Services.TimeOffService>().EnableGrpcWeb();
 		app.MapGrpcService<Services.UserService>().EnableGrpcWeb();
 		app.MapFallbackToFile("/_Host");
 

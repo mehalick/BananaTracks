@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-
-namespace BananaTracks.Domain;
+namespace BananaTracks.Domain.Entities;
 
 public class Team : EntityBase
 {
@@ -14,9 +12,8 @@ public class Team : EntityBase
 		// required for EF
 	}
 
-	public Team(Guid tenantId, string name)
+	public Team(Guid tenantId, string name) : base(tenantId)
 	{
-		TenantId = tenantId;
 		Name = name.Trim();
 	}
 }

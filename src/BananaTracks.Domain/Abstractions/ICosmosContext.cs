@@ -1,3 +1,4 @@
+using BananaTracks.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BananaTracks.Domain.Abstractions;

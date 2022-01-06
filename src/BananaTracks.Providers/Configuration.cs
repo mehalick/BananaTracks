@@ -1,9 +1,6 @@
+using System.Text.Json;
 using Azure.Messaging.ServiceBus;
-using BananaTracks.Domain.Messaging;
-using BananaTracks.Domain.Security;
-using BananaTracks.Domain.ServiceBus;
-using BananaTracks.Providers.Messaging;
-using BananaTracks.Providers.ServiceBus;
+using BananaTracks.Providers.CosmosDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,5 +20,11 @@ public static class Configuration
 		services.AddSingleton<UrlSecurity>();
 
 		services.AddScoped<ITenantService, TenantService>();
+
+		services.Configure<JsonSerializerOptions>(options =>
+		{
+			options.Converters.Add(new DateOnlyJsonConverter());
+			options.Converters.Add(new DateOnlyNullableJsonConverter());
+		});
 	}
 }

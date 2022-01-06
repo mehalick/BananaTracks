@@ -1,10 +1,3 @@
-using BananaTracks.App.Extensions;
-using BananaTracks.App.Shared.Extensions;
-using BananaTracks.App.Shared.Protos;
-using Google.Protobuf.WellKnownTypes;
-using Grpc.Core;
-using Microsoft.EntityFrameworkCore;
-
 namespace BananaTracks.App.Services;
 
 public class UserService : Shared.Protos.UserService.UserServiceBase

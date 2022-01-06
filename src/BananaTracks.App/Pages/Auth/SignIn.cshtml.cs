@@ -1,8 +1,4 @@
-using BananaTracks.App.Extensions;
-using BananaTracks.Domain;
-using BananaTracks.Domain.Security;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.EntityFrameworkCore;
+using BananaTracks.Domain.Entities;
 
 namespace BananaTracks.App.Pages.Auth;
 
@@ -55,12 +51,7 @@ public class SignInModel : PageModel
 			.AsNoTracking()
 			.WithPartitionKey(_tenant.Id.ToString())
 			.Where(i => i.Email == email)
-			.SingleOrDefaultAsync(cancellationToken);
-
-		if (user is null)
-		{
-			throw new Exception($"No user '{email}' found in current tenant.");
-		}
+			.SingleOrThrowAsync(cancellationToken);
 
 		await HttpContext.SignInAsync(_tenant.Id, user);
 

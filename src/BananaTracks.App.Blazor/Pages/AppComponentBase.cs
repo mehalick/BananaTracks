@@ -1,9 +1,17 @@
+using BananaTracks.App.Shared.Protos;
+
 namespace BananaTracks.App.Blazor.Pages;
 
 public class AppComponentBase : ComponentBase
 {
 	[Inject]
 	protected NavigationManager NavigationManager { get; set; } = null!;
+
+	[Inject]
+	protected UserService.UserServiceClient UserServiceClient { get; set; } = null!;
+
+	[Inject]
+	protected TimeOffService.TimeOffServiceClient TimeOffServiceClient { get; set; } = null!;
 
 	public static string EncodeMessage(string message)
 	{

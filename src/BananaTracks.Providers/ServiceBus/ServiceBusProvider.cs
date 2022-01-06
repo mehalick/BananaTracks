@@ -1,6 +1,5 @@
 using System.Text.Json;
 using Azure.Messaging.ServiceBus;
-using BananaTracks.Domain.ServiceBus;
 
 namespace BananaTracks.Providers.ServiceBus;
 

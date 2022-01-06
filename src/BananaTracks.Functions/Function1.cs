@@ -1,5 +1,4 @@
 using BananaTracks.Domain.Messaging;
-using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Configuration;
 

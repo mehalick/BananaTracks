@@ -1,10 +1,8 @@
-using System.Text.Json.Serialization;
-
 namespace BananaTracks.Domain.ServiceBus;
 
 public abstract class ServiceBusMessageBase
 {
-	public Guid TenantIdId { get; set; }
+	public Guid TenantId { get; init; }
 
 	[JsonIgnore]
 	public string QueueName { get; }
@@ -12,11 +10,5 @@ public abstract class ServiceBusMessageBase
 	protected ServiceBusMessageBase(string queueName)
 	{
 		QueueName = queueName;
-	}
-
-	protected ServiceBusMessageBase(string queueName, Guid tenantId)
-	{
-		QueueName = queueName;
-		TenantIdId = tenantId;
 	}
 }

@@ -1,8 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using BananaTracks.Domain;
-using BananaTracks.Domain.Security;
-using BananaTracks.Domain.ServiceBus;
-
 namespace BananaTracks.App.Pages.Auth;
 
 public class SendLinkModel : PageModel
@@ -41,7 +36,7 @@ public class SendLinkModel : PageModel
 
 		await _serviceBusProvider.Send(new SignInRequestedMessage
 		{
-			TenantIdId = _tenant.Id,
+			TenantId = _tenant.Id,
 			Email = Email
 		}, cancellationToken);
 

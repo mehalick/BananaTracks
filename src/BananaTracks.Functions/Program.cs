@@ -1,7 +1,5 @@
 using System.Reflection;
-using BananaTracks.Domain.Configuration;
 using BananaTracks.Providers;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -30,15 +28,12 @@ public class Program
 			})
 			.ConfigureServices((context, services) =>
 			{
-				//services.AddAzureAppConfiguration();
-
 				services.AddOptions();
 				services.Configure<AppSettings>(context.Configuration.GetSection("BananaTracks"));
 
 				var serviceProvider = services.BuildServiceProvider();
 				var configuration = serviceProvider.GetRequiredService<IConfiguration>();
 
-				//services.AddAzureAppConfiguration();
 				services.AddDependencies(configuration);
 			})
 			.Build();

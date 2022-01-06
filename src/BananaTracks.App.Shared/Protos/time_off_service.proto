@@ -1,0 +1,13 @@
+syntax = "proto3";
+option csharp_namespace = "BananaTracks.App.Shared.Protos";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+service TimeOffService {
+	rpc RequestTimeOff (RequestTimeOffRequest) returns (google.protobuf.Empty);
+}
+
+message RequestTimeOffRequest {
+	google.protobuf.Timestamp date = 1;
+}
+

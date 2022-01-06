@@ -4,7 +4,7 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 
 service UserService {
-	rpc GetUser (google.protobuf.Empty) returns (.GetUserReply);
+	rpc GetUser (google.protobuf.Empty) returns (GetUserReply);
 }
 
 message GetUserReply {

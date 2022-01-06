@@ -1,3 +1,4 @@
+using BananaTracks.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
