@@ -6,6 +6,7 @@ namespace BananaTracks.Providers.CosmosDb;
 internal class CosmosContext : DbContext, ICosmosContext
 {
 	public DbSet<Team> Teams { get; set; } = null!;
+	public DbSet<TimeOff> TimeOff { get; set; } = null!;
 	public DbSet<User> Users { get; set; } = null!;
 
 	public CosmosContext(DbContextOptions options) : base(options)
@@ -31,6 +32,8 @@ internal class CosmosContext : DbContext, ICosmosContext
 		//builder.ApplyConfigurationsFromAssembly(typeof(CosmosContext).Assembly);
 
 		builder.Entity<Team>().SetDefaults();
+
+		builder.Entity<TimeOff>().SetDefaults();
 
 		builder.Entity<User>().SetDefaults();
 		builder.Entity<User>().Property(i => i.StartDate).HasConversion(new DateOnlyValueConverter());

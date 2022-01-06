@@ -6,6 +6,7 @@ namespace BananaTracks.Domain.Abstractions;
 public interface ICosmosContext
 {
 	DbSet<Team> Teams { get; set; }
+	DbSet<TimeOff> TimeOff { get; set; }
 	DbSet<User> Users { get; set; }
 
 	Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
