@@ -32,6 +32,7 @@ public class User : EntityBase
 public class TimeOff : EntityBase
 {
 	public Guid TeamId { get; set; }
+	public Guid UserId { get; set; }
 
 	public TimeOffStatus Status { get; set; } = TimeOffStatus.Pending;
 	public TimeOffType Type { get; set; }
