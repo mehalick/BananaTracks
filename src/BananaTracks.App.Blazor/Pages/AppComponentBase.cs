@@ -1,5 +1,3 @@
-using BananaTracks.App.Shared.Protos;
-
 namespace BananaTracks.App.Blazor.Pages;
 
 public class AppComponentBase : ComponentBase

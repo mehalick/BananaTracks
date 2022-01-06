@@ -3,21 +3,22 @@
 
 <PageTitle>Home | Banana Tracks</PageTitle>
 
-<p><img src="https://ojs.azureedge.net/assets/banner-637762719499419452.png" class="img-fluid" alt="" /></p>
-
-<div id="grid">
-	<div>
-		<Loading IsLoading="User is null" Style="@LoadingStyle.Panel">
-			<dl>
-				<dt>Name</dt>
-				<dd>@User!.Name</dd>
-				<dt>Team</dt>
-				<dd>@User.TeamName</dd>
-				<dt>Start Date</dt>
-				<dd>@User.StartDate.ToSortableDate()</dd>
-			</dl>
-		</Loading>
-	</div>
-    <div><a href="/request-time-off">Request Time Off</a></div>
-    <div>...</div>
-</div>
+<Page>
+    <p><img src="https://ojs.azureedge.net/assets/banner-637762719499419452.png" class="img-fluid" alt="" /></p>
+    <div id="grid">
+        <div>
+            <Loading IsLoading="User is null" Style="@LoadingStyle.Panel">
+                <dl>
+                    <dt>Name</dt>
+                    <dd>@User!.Name</dd>
+                    <dt>Team</dt>
+                    <dd>@User.TeamName</dd>
+                    <dt>Start Date</dt>
+                    <dd>@User.StartDate.ToSortableDate()</dd>
+                </dl>
+            </Loading>
+        </div>
+        <div><a href="/request-time-off">Request Time Off</a></div>
+        <div>...</div>
+    </div>
+</Page>

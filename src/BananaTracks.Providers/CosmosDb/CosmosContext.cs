@@ -34,6 +34,7 @@ internal class CosmosContext : DbContext, ICosmosContext
 		builder.Entity<Team>().SetDefaults();
 
 		builder.Entity<TimeOff>().SetDefaults();
+		builder.Entity<TimeOff>().Property(i => i.Date).HasConversion(new DateOnlyValueConverter());
 
 		builder.Entity<User>().SetDefaults();
 		builder.Entity<User>().Property(i => i.StartDate).HasConversion(new DateOnlyValueConverter());

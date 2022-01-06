@@ -1,12 +1,15 @@
 namespace BananaTracks.App.Blazor.Components;
 
-public partial class Page : AppComponentBase
+public partial class Page : ComponentBase
 {
 	[Parameter]
 	public bool IsLoading { get; set; }
 
 	[Parameter]
 	public RenderFragment ChildContent { get; set; } = null!;
+
+	[Inject]
+	protected NavigationManager NavigationManager { get; set; } = null!;
 
 	protected MarkupString StatusMessage { get; set; }
 
@@ -18,6 +21,8 @@ public partial class Page : AppComponentBase
 		{
 			ShowSuccess(DecodeMessage(message.First()));
 		}
+
+		base.OnInitialized();
 	}
 
 	public void ShowSuccess(string message)

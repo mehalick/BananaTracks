@@ -1,4 +1,3 @@
-using BananaTracks.App.Shared.Protos;
 using Google.Protobuf.WellKnownTypes;
 
 namespace BananaTracks.App.Blazor.Pages;
