@@ -40,7 +40,7 @@ a {
 
 	a:hover,
 	a:focus {
-		color: #f3216d;
+		color: var(--dark-red);
 	}
 
 ul.link-list {
@@ -91,6 +91,7 @@ td.fit-cell {
 	position: fixed;
 	width: 100%;
 	z-index: 1000;
+	color: red;
 }
 
 	#blazor-error-ui .dismiss {
@@ -110,3 +111,15 @@ td.fit-cell {
 	border-radius: 1rem;
 	padding: 1rem;
 }
+
+.btn {
+	color: white;
+	background: var(--light-blue);
+	border: var(--light-blue);
+}
+
+	.btn:hover {
+		color: white;
+		background: var(--dark-red);
+		border: var(--dark-red);
+	}

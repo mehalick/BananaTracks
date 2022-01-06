@@ -5,27 +5,31 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>BananaTracks</title>
-    <base href="/" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.1/css/bootstrap.min.css" integrity="sha512-6KY5s6UI5J7SVYuZB4S/CZMyPylqyyNZco376NM2Z8Sb8OxEdp02e1jkKk/wZxIEmjQ6DRCEBhni+gpr9c4tvA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/app.css" asp-append-version="true" />
-    <link rel="stylesheet" href="BananaTracks.App.Blazor.styles.css" asp-append-version="true" />
-    <link rel="manifest" href="manifest.json" />
-    <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
-    <script src="https://kit.fontawesome.com/eb386c71b5.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>BananaTracks</title>
+	<base href="/" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.1/css/bootstrap.min.css" integrity="sha512-6KY5s6UI5J7SVYuZB4S/CZMyPylqyyNZco376NM2Z8Sb8OxEdp02e1jkKk/wZxIEmjQ6DRCEBhni+gpr9c4tvA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/app.css" asp-append-version="true" />
+	<link rel="stylesheet" href="BananaTracks.App.Blazor.styles.css" asp-append-version="true" />
+	<link rel="manifest" href="manifest.json" />
+	<link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
+	<script src="https://kit.fontawesome.com/eb386c71b5.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
-    <div id="app">Loading...</div>
-    <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="" class="reload">Reload</a>
-        <a class="dismiss">🗙</a>
-    </div>
-    <script src="_framework/blazor.webassembly.js"></script>
-    <script>navigator.serviceWorker.register('service-worker.js');</script>
+	<div id="app">
+		<div class="loading">
+			<i class="fad fa-circle-notch fa-spin fa-2x"></i>
+		</div>
+	</div>
+	<div id="blazor-error-ui">
+		An unhandled error has occurred.
+		<a href="" class="reload">Reload</a>
+		<a class="dismiss">🗙</a>
+	</div>
+	<script src="_framework/blazor.webassembly.js"></script>
+	<script>navigator.serviceWorker.register('service-worker.js');</script>
 </body>
 
 </html>

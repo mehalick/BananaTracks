@@ -3,9 +3,11 @@
 @if (!string.IsNullOrWhiteSpace(StatusMessage.Value))
 {
 	<div class="alert alert-success" role="alert">
+		<i class="far fa-laugh-beam fa-lg"></i>
 		@StatusMessage
 	</div>
 }
+
 @if (IsLoading)
 {
 	<div class="loading"><i class="fad fa-circle-notch fa-spin fa-2x"></i>Loading...</div>

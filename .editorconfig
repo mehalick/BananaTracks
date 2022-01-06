@@ -27,6 +27,10 @@ trim_trailing_whitespace = true
 indent_style = space
 indent_size = 2
 
+# Razor Files
+[*.razor]
+indent_style = tab
+
 # Markdown Files
 [*.md]
 trim_trailing_whitespace = false
