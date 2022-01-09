@@ -4,12 +4,13 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-	  <UserSecretsId>263dc1aa-211a-4e01-87be-69fe15e74776</UserSecretsId>
-  </PropertyGroup>
+		<UserSecretsId>263dc1aa-211a-4e01-87be-69fe15e74776</UserSecretsId>
+	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Grpc.AspNetCore" Version="2.41.0" />
 		<PackageReference Include="Grpc.AspNetCore.Web" Version="2.41.0" />
+		<PackageReference Include="Joonasw.AspNetCore.SecurityHeaders" Version="3.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.1" />
 		<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="4.5.1" />
 		<PackageReference Include="Microsoft.Extensions.Azure" Version="1.1.1" />
@@ -23,6 +24,5 @@
 		<ProjectReference Include="..\BananaTracks.Domain\BananaTracks.Domain.csproj" />
 		<ProjectReference Include="..\BananaTracks.Providers\BananaTracks.Providers.csproj" />
 	</ItemGroup>
-
 
 </Project>

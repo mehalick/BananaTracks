@@ -1,10 +1,3 @@
-using BananaTracks.Domain.Configuration;
-using BananaTracks.Domain.Messaging;
-using BananaTracks.Domain.Security;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-
 namespace BananaTracks.Functions.ServiceBus;
 
 public class SignInRequested

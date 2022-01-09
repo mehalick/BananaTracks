@@ -1,6 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using BananaTracks.Domain.Entities;
-
 namespace BananaTracks.App.Pages.Auth;
 
 public class RegisterModel : PageModel

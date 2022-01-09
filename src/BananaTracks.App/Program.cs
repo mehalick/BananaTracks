@@ -1,3 +1,4 @@
+using Joonasw.AspNetCore.SecurityHeaders;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -74,6 +75,7 @@ internal class Program
 			options.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build());
 
 		builder.Services.AddHttpContextAccessor();
+		builder.Services.AddCsp(nonceByteAmount: 32);
 
 		builder.Services.AddDependencies(builder.Configuration);
 
@@ -87,16 +89,59 @@ internal class Program
 		{
 			app.UseAzureAppConfiguration();
 			app.UseExceptionHandler("/Error");
-			app.UseHsts();
-			app.UseHttpsRedirection();
 		}
 
-		app.UseCookiePolicy(new CookiePolicyOptions
-		{
-			MinimumSameSitePolicy = SameSiteMode.Strict,
-		});
-
 		app.UseSerilogRequestLogging();
+
+		app.UseCookiePolicy(new() { MinimumSameSitePolicy = SameSiteMode.Strict });
+
+		app.UseHsts(new(TimeSpan.FromDays(365), includeSubDomains: true, preload: false));
+		app.UseHttpsRedirection();
+
+		app.UseCsp(csp =>
+		{
+			csp.ByDefaultAllow
+				.FromSelf();
+
+			csp.AllowScripts
+				.AllowUnsafeEval()
+				.FromSelf()
+				.From("'sha256-v8v3RKRPmN4odZ1CWM5gw80QKPCCWMcpNeOmimNL2AA='") // Blazor Framework
+				.From("'sha256-3Ey30PJkNcf9LrK7CIqrujoq79a+uJqKgYsaBDj15Eo='") // Font Awesome
+				.From("https://kit.fontawesome.com")
+				.AddNonce();
+
+			csp.AllowStyles
+				.FromSelf()
+				.From("'sha256-ixVUGs3ai0rMA0pgIVBN0KVlYbQip7/5SGmnUwJPNqE='") // Font Awesome
+				.From("https://cdnjs.cloudflare.com");
+
+			csp.AllowImages
+				.FromSelf()
+				.From("https://ojs.azureedge.net");
+
+			csp.AllowAudioAndVideo
+				.FromNowhere();
+
+			csp.AllowFrames
+				.FromNowhere();
+
+			csp.AllowConnections
+				.To("ws://localhost:7032")
+				.To("ws://localhost:58781")
+				.To("https://ka-p.fontawesome.com")
+				.ToSelf();
+
+			csp.AllowFonts
+				.FromSelf()
+				.From("https://kit.fontawesome.com");
+
+			csp.AllowPlugins
+				.FromNowhere();
+
+			csp.AllowFraming
+				.FromNowhere();
+		});
 
 		app.UseBlazorFrameworkFiles();
 		app.UseStaticFiles();
