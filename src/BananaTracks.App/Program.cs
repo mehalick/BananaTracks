@@ -118,6 +118,7 @@ internal class Program
 
 			csp.AllowImages
 				.FromSelf()
+				.From("data:")
 				.From("https://ojs.azureedge.net");
 
 			csp.AllowAudioAndVideo

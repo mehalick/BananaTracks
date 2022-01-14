@@ -21,10 +21,23 @@ public class TimeOffRequested
 			.Where(i => i.Id == message.UserId)
 			.SingleOrThrowAsync();
 
+		var existing = await _cosmosContext.TimeOff
+			.AsNoTracking()
+			.WithPartitionKey(message.TenantId.ToString())
+			.Where(i => i.Id == message.UserId)
+			.Where(i => i.Date == message.Date)
+			.CountAsync();
+
+		if (existing > 0)
+		{
+			return;
+		}
+
 		var timeOff = new TimeOff(message.TenantId)
 		{
 			TeamId = user.TeamId,
 			UserId = user.Id,
+			UserName = user.Name,
 			Status = TimeOffStatus.Approved,
 			Type = TimeOffType.Planned,
 			Date = message.Date

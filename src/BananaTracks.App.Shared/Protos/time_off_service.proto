@@ -5,9 +5,36 @@ import "google/protobuf/empty.proto";
 
 service TimeOffService {
 	rpc RequestTimeOff (RequestTimeOffRequest) returns (google.protobuf.Empty);
+	rpc GetTimeOffByTeam (GetTimeOffByTeamRequest) returns (GetTimeOffByTeamReply);
 }
 
 message RequestTimeOffRequest {
 	google.protobuf.Timestamp date = 1;
 }
 
+message GetTimeOffByTeamRequest {
+	string teamId = 1;
+}
+
+message GetTimeOffByTeamReply {
+	repeated TimeOffItem items = 1;
+}
+
+message TimeOffItem {
+	string id = 1;
+	string userId = 2;
+	string userName = 3;
+	google.protobuf.Timestamp date = 4;
+	TimeOffStatus status = 5;
+	TimeOffType type = 6;
+}
+
+enum TimeOffStatus {
+	TIME_OFF_STATUS_PENDING = 0;
+	TIME_OFF_STATUS_APPROVED = 1;
+}
+
+enum TimeOffType {
+	TIME_OFF_TYPE_UNPLANNED = 0;
+	TIME_OFF_TYPE_PLANNED = 1;
+}

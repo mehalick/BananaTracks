@@ -1,4 +1,4 @@
-﻿namespace BananaTracks.App.Services;
+namespace BananaTracks.App.Services;
 
 public class TimeOffService : Shared.Protos.TimeOffService.TimeOffServiceBase
 {
@@ -23,5 +23,29 @@ public class TimeOffService : Shared.Protos.TimeOffService.TimeOffServiceBase
 		}, context.CancellationToken);
 
 		return new();
+	}
+
+	public override async Task<GetTimeOffByTeamReply> GetTimeOffByTeam(GetTimeOffByTeamRequest request, ServerCallContext context)
+	{
+		var timeOff = await _cosmosContext.TimeOff
+			.AsNoTracking()
+			.WithPartitionKey(_tenantId.ToString())
+			.Where(i => i.TeamId == Guid.Parse(request.TeamId))
+			.OrderBy(i => i.Date)
+			.ToListAsync(context.CancellationToken);
+
+		var reply = new GetTimeOffByTeamReply();
+
+		reply.Items.AddRange(timeOff.Select(i => new TimeOffItem
+		{
+			Id = i.Id.ToString(),
+			UserId = i.UserId.ToString(),
+			UserName = i.UserName,
+			Date = i.Date.ToTimestamp(),
+			Status = (Shared.Protos.TimeOffStatus)i.Status,
+			Type = (Shared.Protos.TimeOffType)i.Type
+		}));
+
+		return reply;
 	}
 }
