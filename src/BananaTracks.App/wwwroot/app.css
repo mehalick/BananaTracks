@@ -28,18 +28,23 @@ header {
 		font-size: 1.2rem;
 	}
 
+nav {
+	display: grid;
+	grid-template-columns: 1fr auto auto;
+	gap: 1rem;
+}
+
 .view {
 	max-width: 768px;
 	margin: 0 auto;
 	padding: 1rem;
 }
 
-a {
+a, a:focus {
 	color: #ffffff;
 }
 
-	a:hover,
-	a:focus {
+	a:hover {
 		color: var(--dark-red);
 	}
 
@@ -59,6 +64,10 @@ ul.link-list {
 		ul.link-list li:last-child {
 			margin-right: 0;
 		}
+
+.table {
+	color: white;
+}
 
 td.fit-cell {
 	width: 1%;

@@ -1,0 +1,17 @@
+@page "/account"
+@inherits AppComponentBase
+
+<PageTitle>Account | Banana Tracks</PageTitle>
+
+<Page IsLoading="User is null">
+	<dl>
+		<dt>Name</dt>
+		<dd>@User!.Name</dd>
+		<dt>Email</dt>
+		<dd>@User.Email</dd>
+		<dt>Team</dt>
+		<dd>@User.TeamName</dd>
+		<dt>Start Date</dt>
+		<dd>@User.StartDate.ToSortableDate()</dd>
+	</dl>
+</Page>

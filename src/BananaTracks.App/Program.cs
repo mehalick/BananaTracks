@@ -128,8 +128,7 @@ internal class Program
 				.FromNowhere();
 
 			csp.AllowConnections
-				.To("ws://localhost:7032")
-				.To("ws://localhost:58781")
+				.To("ws:")
 				.To("https://ka-p.fontawesome.com")
 				.ToSelf();
 
